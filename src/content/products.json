@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "id": "p1",
+      "title": "Wireless Headphones",
+      "category": "Electronics & Gadgets",
+      "price": 79.99,
+      "image": "/assets/images/headphones.jpg",
+      "url": "https://example.com/affiliate/headphones",
+      "description": "Comfortable wireless headphones with noise cancellation."
+    },
+    {
+      "id": "p2",
+      "title": "Smart LED Lamp",
+      "category": "Home & Living",
+      "price": 39.90,
+      "image": "/assets/images/lamp.jpg",
+      "url": "https://example.com/affiliate/lamp",
+      "description": "Dimmable smart lamp with app control."
+    }
+  ]
+}
