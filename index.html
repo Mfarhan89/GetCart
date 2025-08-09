@@ -23,13 +23,87 @@
     </div>
   </nav>
 
-  <!-- Content sections here ... -->
-  
-  <!-- Link to Admin Panel -->
+  <!-- Hero Section -->
+  <section id="home" class="bg-blue-600 text-white py-20 text-center">
+    <h1 class="text-4xl font-bold mb-4">Find the Best Deals on Top Products</h1>
+    <p class="max-w-2xl mx-auto">Shop through our affiliate links and enjoy exclusive discounts!</p>
+  </section>
+
+  <!-- Product Sections -->
+  <section id="electronics" class="py-12 max-w-7xl mx-auto px-4">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Electronics & Gadgets</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="electronics-list"></div>
+  </section>
+
+  <section id="home-living" class="py-12 max-w-7xl mx-auto px-4">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Home & Living</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="home-living-list"></div>
+  </section>
+
+  <section id="beauty" class="py-12 max-w-7xl mx-auto px-4">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Beauty & Personal Care</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="beauty-list"></div>
+  </section>
+
+  <section id="food" class="py-12 max-w-7xl mx-auto px-4">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Food & Beverages</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="food-list"></div>
+  </section>
+
+  <section id="all" class="py-12 max-w-7xl mx-auto px-4">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">All Categories</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="all-list"></div>
+  </section>
+
+  <!-- Footer -->
   <footer class="bg-gray-800 text-white py-6 text-center mt-10">
     <p>&copy; 2025 AffiliateStore | <a href="/admin/" class="underline">Admin Login</a></p>
   </footer>
 
+  <!-- JS to Load Products -->
+  <script>
+    const repoOwner = "YOUR_USERNAME"; // Change to your GitHub username
+    const repoName = "affiliate-website"; // Change to your repo name
+
+    async function loadProducts() {
+      const res = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/_products`);
+      const files = await res.json();
+
+      for (let file of files) {
+        if (file.name.endsWith(".md")) {
+          const rawRes = await fetch(file.download_url);
+          const text = await rawRes.text();
+          
+          // Parse frontmatter
+          const match = /---([\s\S]*?)---/m.exec(text);
+          if (match) {
+            const fm = match[1].trim().split("\n").reduce((acc, line) => {
+              const [key, ...rest] = line.split(":");
+              acc[key.trim()] = rest.join(":").trim().replace(/^"|"$/g, '');
+              return acc;
+            }, {});
+
+            const card = `
+              <div class="bg-white rounded-xl shadow hover:shadow-lg p-4">
+                <img src="${fm.image}" alt="${fm.title}" class="rounded-lg mb-4 w-full h-48 object-cover">
+                <h3 class="font-semibold">${fm.title}</h3>
+                <p class="text-gray-600 text-sm mb-3">${fm.description}</p>
+                <a href="${fm.link}" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Buy Now</a>
+              </div>
+            `;
+
+            if (fm.category === "Electronics & Gadgets") document.getElementById("electronics-list").innerHTML += card;
+            if (fm.category === "Home & Living") document.getElementById("home-living-list").innerHTML += card;
+            if (fm.category === "Beauty & Personal Care") document.getElementById("beauty-list").innerHTML += card;
+            if (fm.category === "Food & Beverages") document.getElementById("food-list").innerHTML += card;
+            document.getElementById("all-list").innerHTML += card;
+          }
+        }
+      }
+    }
+
+    loadProducts();
+  </script>
+
 </body>
 </html>
-
