@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ title or "GetCart — Affiliate Products" }}</title>
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="/">GetCart</a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-btn" href="/">Home</a>
+        <button class="nav-btn" data-category="Electronics & Gadgets">Electronics & Gadgets</button>
+        <button class="nav-btn" data-category="Home & Living">Home & Living</button>
+        <button class="nav-btn" data-category="Beauty & Personal Care">Beauty & Personal Care</button>
+        <button class="nav-btn" data-category="Food & Beverages">Food & Beverages</button>
+        <button class="nav-btn active" data-category="all">All Category</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 id="page-title">All Category</h2>
+    <section id="products" class="products-grid" aria-live="polite"></section>
+  </main>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>
